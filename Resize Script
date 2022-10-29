@@ -1,1 +1,37 @@
+#Image Resize
+def create_directory(directory):
+    '''
+    Creates a new folder in the specified directory if the folder doesn't exist.
+    INPUT
+        directory: Folder to be created, called as "folder/".
+    OUTPUT
+        New folder in the current directory.
+    '''
+    if not os.path.exists(directory):
+        os.makedirs(directory)
 
+
+def resize_images(path, new_path,img_size=1024):
+    '''
+    Crops, resizes, and stores all images from a directory in a new directory.
+    INPUT
+        path: Path where the current, unscaled images are contained.
+        new_path: Path to save the resized images.
+        img_size: New size for the rescaled images.
+    OUTPUT
+        All images cropped, resized, and saved from the old folder to the new folder.
+    '''
+    create_directory(new_path)
+    dirs = [l for l in os.listdir(path) if l != '.DS_Store']
+    total = 0
+
+    for item in dirs:
+        img = io.imread(path+item)
+        img = resize(img, (1024,1024))
+        io.imsave(str(new_path + item), img_as_ubyte(img))
+        total += 1
+        print("Saving: ", item, total)
+
+
+if __name__ == '__main__':
+    resize_images(path='sample/', new_path='sample_resize/', img_size=1024)
