@@ -1,0 +1,58 @@
+# BGR to Gray Scale
+img_array = cv2.imread(os.path.join(path, img))
+image_bw = cv2.cvtColor(img_array, cv2.COLOR_BGR2GRAY)
+        
+    # The declaration of CLAHE
+    # clipLimit -> Threshold for contrast limiting
+clahe = cv2.createCLAHE(clipLimit = 5.0, tileGridSize=(16, 16))
+final_img = clahe.apply(image_bw) + 0
+cv2.imshow("CLAHE image", final_img)
+plt.imshow(final_img)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+
+
+
+#BGR to LAB
+#image = cv2.imread("C://AiHints//apple.jpg")
+#imread is use to read an image from a location
+
+#img_array = cv2.imread(os.path.join(path, img))
+
+img_array = cv2.imread("E:\FYP\Extra\DATASETS//25_left.jpeg")
+lab_image = cv2.cvtColor(img_array, cv2.COLOR_BGR2LAB)
+cv2.imshow("Original Image", img_array)
+cv2.imshow("LAB Image", lab_image)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+
+
+
+
+#CLAHE on LAB
+#def histogram_equalization(img):
+
+#img_array = cv2.imread(os.path.join(path, img))
+
+img_array = cv2.imread("E:\FYP\Extra\DATA//25_left.jpeg")
+lab = cv2.cvtColor(img_array, cv2.COLOR_BGR2Lab)
+
+    # -----Splitting the LAB image to different channels-------------------------
+l, a, b = cv2.split(lab)
+
+    # -----Applying CLAHE to L-channel-------------------------------------------
+clahe = cv2.createCLAHE(clipLimit=5.0, tileGridSize=(32, 32))
+cl = clahe.apply(l)
+
+    # -----Merge the CLAHE enhanced L-channel with the a and b channel-----------
+limg = cv2.merge((cl, a, b))
+
+    # -----Converting image from LAB Color model to RGB model--------------------
+final = cv2.cvtColor(limg, cv2.COLOR_LAB2BGR)
+
+cv2.imshow("Original Image", img_array)
+cv2.imshow("LAB Image", final)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
